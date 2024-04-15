@@ -1,13 +1,25 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
 import { CreatePaginationOptions, createPagination } from "./pagination.js";
-import prismaClient from "prisma/index.js";
 import { settings } from "#settings";
+import { prismaClient } from "../prisma/index.js";
+
+interface Student {
+    id: string;
+    discordUserID: string;
+    discordUsername: string | null;
+    fullName: string;
+    age: number;
+    polo: string;
+    createAt: Date;
+    updateAt: Date;
+    since: Date;
+}
 
 export default class StudentViewer {
     async viewStudents(interaction: CommandInteraction) {
         await interaction.deferReply({ ephemeral: true });
         try {
-            const students = await prismaClient.student.findMany();
+            const students: Student[] = await prismaClient.student.findMany();
 
             if (students.length === 0) {
                 const error = settings.emojis.error;

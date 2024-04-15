@@ -1,6 +1,7 @@
 import { Component } from "#base";
+import { prismaClient } from "../../../prisma/index.js";
 import { ComponentType, AttachmentBuilder } from "discord.js";
-import prismaClient from "prisma/index.js";
+
 
 new Component({
     customId: "export/json/server",
@@ -8,6 +9,7 @@ new Component({
     type: ComponentType.Button,
     async run(interaction) {
         try {
+
             const guildData = await prismaClient.guild.findMany();
 
             if (guildData.length > 0) {

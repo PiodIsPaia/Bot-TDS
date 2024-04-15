@@ -1,9 +1,10 @@
 import { Modal } from "#base";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
+import { prismaClient } from "../../../prisma/index.js";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder, InteractionCollector } from "discord.js";
-import WebhookLogs from "functions/webhook.js";
-import prismaClient from "prisma/index.js";
+import WebhookLogs from "../../../functions/webhook.js";
+
 
 new Modal({
     customId: "modal/register",

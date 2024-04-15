@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { settings } from "#settings";
 import { ApplicationCommandType } from "discord.js";
-import MemberViewer from "functions/students.js";
+import MemberViewer from "../../../functions/students.js";
 
 const memberViewer = new MemberViewer();
 

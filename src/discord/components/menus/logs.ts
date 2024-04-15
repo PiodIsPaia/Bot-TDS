@@ -1,8 +1,9 @@
 import { Component } from "#base";
 import { createRow } from "@magicyan/discord";
+import { prismaClient } from "../../../prisma/index.js";
 import { ComponentType, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
-import { embedError, embedSuccess } from "functions/embeds.js";
-import prismaClient from "prisma/index.js";
+import { embedError, embedSuccess } from "../../../functions/embeds.js";
+
 
 new Component({
     customId: "menu/string/webhook",

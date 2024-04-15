@@ -61,6 +61,5 @@ new Component({
         const buttonRow = createRow(buttonBack);
 
         await interaction.update({ embeds: [embed], components: [rowWebhook, rowCategory, rowRole, buttonRow], fetchReply });
-        
     },
 });

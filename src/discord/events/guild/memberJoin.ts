@@ -1,8 +1,9 @@
 import { Event } from "#base";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
+import { prismaClient } from "../../../prisma/index.js";
 import { ButtonBuilder, ButtonStyle, ChannelType, EmbedBuilder } from "discord.js";
-import prismaClient from "prisma/index.js";
+
 
 new Event({
     name: "Member Join",
@@ -66,6 +67,6 @@ new Event({
 
         const row = createRow(button);
 
-        channel.send({ content: `<@${member.id}>` ,embeds: [embed], components: [row] });
+        channel.send({ content: `<@${member.id}>`, embeds: [embed], components: [row] });
     },
 });
