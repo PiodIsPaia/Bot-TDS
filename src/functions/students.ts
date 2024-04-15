@@ -15,19 +15,21 @@ export default class StudentViewer {
                 return;
             }
 
-
             const embeds = students.map(student => {
                 const user = interaction.client.users.cache.get(student.discordUserID);
                 let avatarUrl = user?.avatarURL({ size: 512 });
-                if (avatarUrl == "") {
+                if (!avatarUrl) {
                     avatarUrl = "https://i.imgur.com/ORiJO66.png";
                 }
 
                 return new EmbedBuilder()
-                    .setThumbnail(avatarUrl!!)
+                    .setThumbnail(avatarUrl)
                     .setTitle(`${student.fullName}`)
                     .setDescription(`> ID: \`${student.discordUserID}\`\n> Idade: \`${student.age}\` anos\n> Polo: \`${student.polo}\``)
-                    .setColor(Colors.White);
+                    .setColor(Colors.White)
+                    .setFooter(
+                        { text: `Página ${students.indexOf(student) + 1} de ${students.length}` },
+                    );
             });
 
             const paginationOptions: CreatePaginationOptions = {

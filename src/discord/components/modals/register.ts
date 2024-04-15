@@ -76,24 +76,49 @@ new Modal({
 
                     await webhook.sendEmbed(webhookEmbed, i.client.user.avatarURL({ size: 512 })!!);
 
-                    await prismaClient.student.create({
-                        data: {
+                    const existingStudent = await prismaClient.student.findUnique({
+                        where: {
                             discordUserID: interaction.user.id,
-                            discordUsername: interaction.user.username,
-                            fullName: fullName,
-                            age: parseInt(age),
-                            polo: polo,
-                            createAt: new Date(),
-                            updateAt: new Date(),
-                            since: new Date(),
                         },
                     });
+
+                    if (existingStudent) {
+                        await prismaClient.student.update({
+                            where: {
+                                id: existingStudent.id,
+                            },
+                            data: {
+                                fullName: fullName,
+                                age: parseInt(age),
+                                polo: polo,
+                                updateAt: new Date(),
+                            },
+                        });
+                    } else {
+                        await prismaClient.student.create({
+                            data: {
+                                discordUserID: interaction.user.id,
+                                discordUsername: interaction.user.username,
+                                fullName: fullName,
+                                age: parseInt(age),
+                                polo: polo,
+                                createAt: new Date(),
+                                updateAt: new Date(),
+                                since: new Date(),
+                            },
+                        });
+                    }
 
                     await interaction.member.roles.add(guild.roleID);
 
                     const check = settings.emojis.success;
                     try {
-                        await interaction.member.setNickname(fullName);
+                        const match = fullName.match(/(\S+)\s+(\S+)/);
+                        if (match == null) return;
+                        const firstName = match[1];
+                        const secondName = match[2];
+
+                        await interaction.member.setNickname(`${firstName} ${secondName}`);
                         await i.reply({ ephemeral: true, content: `${check} As informações foram salvas com sucesso!\n⏳ Deletarei este canal em 10 segundos.` });
                     } catch (nicknameError) {
                         console.error("Erro ao definir o nickname:", nicknameError);
