@@ -114,7 +114,6 @@ new Component({
                 });
 
                 if (existingGuild) {
-                    // Atualizar o roleID existente
                     await prisma.guild.update({
                         where: {
                             id: existingGuild.id,
