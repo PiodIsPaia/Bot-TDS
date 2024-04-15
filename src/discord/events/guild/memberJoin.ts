@@ -116,7 +116,12 @@ new Event({
                         .setColor(hexToRgb(settings.colors.danger))
                         .setFooter({ text: "iD dele: " + user.id });
 
-                    await channel.send({ embeds: [embed] });
+                    await channel.send({ embeds: [embed] }).then(async (msg) => {
+                        await msg.channel.send({content: "⏳ Irei excluir este canal em 30 segundos."});
+                        setTimeout(async () => {
+                            await msg.delete();
+                        }, 30_000);
+                    }).catch((err) => console.error(err));
                     messageCollector.stop();
                 } else {
                     await channel.send({ content: `${error} Não encontrei nenhum usuário correspondente a "${originalName}"!\n💠 Por favor, digite seu nome novamente!` });
