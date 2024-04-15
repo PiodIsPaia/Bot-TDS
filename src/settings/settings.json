@@ -1,0 +1,51 @@
+{
+  "config": {
+    "piod": "1147334381460000840",
+    "andre": "446874304643334154"
+  },
+  "colors": {
+    "default": "#2B2D31",
+    
+    "primary": "#3b82f6",
+    "secondary": "#4f545c",
+    "success": "#22c55e",
+    "danger": "#ED4245",
+    "info": "#FEE75C",
+    "warning": "#fbbd23",
+
+    "magic": "#c026d3",
+    "green": "#57F287",
+    "fuchsia": "#EB459E",
+    "azoxo": "#5865F2",
+
+    "developer": "#3e70dd",
+    "balance": "#45ddc0",
+    "brilliance": "#f07d5f",
+    "nitro": "#ff6bfa",
+    "bravery": "#9c84ef"
+  },
+
+  "emojis": {
+    "log": "<:log:1229077284863082596>",
+    "role": "<:roles:1229088960555520030>",
+    "success": "<:sucess:1229104730173607987>",
+    "server": "<:servidor:1229088116342657146>",
+    "error": "<:Erro:1229088137561509949>",
+    "archive": "<:arquivo:1229088095266148352>",
+    "gear": "<:gear:1229140670262804520>",
+    "viwe": "<a:viwe:1229141428098044094>",
+    "autofone": "<a:falante:1229151998675259402>",
+    "json": "<:json:1229153923793817611>",
+    "admin": "<:admin:1229160218860978196>",
+    "people": "<:people:1229183154783518812>",
+    "ticket": "<:ticket:1229183601564713030>",
+    "star": "<:star:1229184129224933446>",
+    "back": "<a:back:1229200634138460331>"
+  },
+
+  "images": {
+    "archive": "https://i.imgur.com/CZSQ1Jn.png",
+    "paimon": "https://i.imgur.com/5o3sMr3.png",
+    "badge": "https://i.imgur.com/HmCwUbl.png"
+  }
+}
