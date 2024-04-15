@@ -1,5 +1,5 @@
 import { Modal } from "#base";
-import prismaClient from "prisma/index.js";
+import { prismaClient } from "../../../prisma/index.js";
 import { embedError, embedSuccess } from "../../../functions/embeds.js";
 
 new Modal({

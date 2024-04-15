@@ -1,8 +1,8 @@
 import { Component } from "#base";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
+import { prismaClient } from "../../../prisma/index.js";
 import { ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } from "discord.js";
-import prismaClient from "prisma/index.js";
 
 new Component({
     customId: "button/menu/view",
