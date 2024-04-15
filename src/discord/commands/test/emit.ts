@@ -33,7 +33,7 @@ new Command({
                 client.emit("guildMemberAdd", mention);
 
                 interaction.reply({ ephemeral: true,
-                    content: "guildMemberAdd event emited"
+                    content: `Evento emito para ${mention}`
                 });
                 return;
             }
