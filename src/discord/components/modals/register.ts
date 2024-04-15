@@ -110,7 +110,14 @@ new Modal({
                         });
                     }
 
-                    await interaction.member.roles.add(guild.roleID);
+                    const erro = settings.emojis.error;
+
+                    try {
+                        await interaction.member.roles.add(guild.roleID);
+                    } catch (error) {
+                        await i.reply({ content: `${erro} Não pude adcionar o cargo a você!\n💠 Error: \`\`${error}\`\`` });
+                    }
+
 
                     const check = settings.emojis.success;
                     try {
@@ -122,8 +129,7 @@ new Modal({
                         await interaction.member.setNickname(`${firstName} ${secondName}`);
                         await i.reply({ ephemeral: true, content: `${check} As informações foram salvas com sucesso!\n⏳ Deletarei este canal em 10 segundos.` });
                     } catch (nicknameError) {
-                        console.error("Erro ao definir o nickname:", nicknameError);
-                        await i.reply({ ephemeral: true, content: "Houve um problema ao tentar definir seu nickname. Suas informações foram salvas, mas seu nickname não pôde ser alterado." });
+                        await i.reply({ ephemeral: true, content: erro + "Houve um problema ao tentar definir seu nickname. Suas informações foram salvas, mas seu nickname não pôde ser alterado." });
                     }
 
                     setTimeout(() => {

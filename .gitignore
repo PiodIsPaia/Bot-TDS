@@ -3,11 +3,13 @@
 /discloud
 /deprecated
 /node_modules
+/.vscode
 
 # Files
 /.env
 /.env.development
 /package-lock.json
+
 
 # Config files
 /firebase.json

@@ -38,3 +38,9 @@ model admin {
   userId   String @unique @map("userId")
   username String @map("username")
 }
+
+model document {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String[]
+  createdAt DateTime @default(now())
+}
