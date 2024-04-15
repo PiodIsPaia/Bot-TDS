@@ -84,7 +84,7 @@ new Event({
             const document = documents.find(doc => doc.content.some(contentName => removeAccents(contentName.toLowerCase().replace(/\s/g, "")) === name));
 
             if (document) {
-                
+
                 await channel.bulkDelete(100);
 
                 const check = settings.emojis.success;
@@ -117,9 +117,12 @@ new Event({
                         .setFooter({ text: "iD dele: " + user.id });
 
                     await channel.send({ embeds: [embed] }).then(async (msg) => {
-                        await msg.channel.send({content: "⏳ Irei excluir este canal em 30 segundos."});
+                        const embed = new EmbedBuilder()
+                            .setDescription(`${settings.emojis.success} Irei excluir este canal em 30 segundos.`)
+                            .setColor(hexToRgb(settings.colors.green));
+                        await msg.channel.send({ embeds: [embed] });
                         setTimeout(async () => {
-                            await msg.delete();
+                            await msg.channel.delete();
                         }, 30_000);
                     }).catch((err) => console.error(err));
                     messageCollector.stop();
