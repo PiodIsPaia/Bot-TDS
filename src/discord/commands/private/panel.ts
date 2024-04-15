@@ -49,7 +49,7 @@ new Command({
                 .setEmoji(settings.emojis.viwe),
 
             new ButtonBuilder()
-                .setCustomId("button/add/admin")
+                .setCustomId("button/admin")
                 .setLabel("Admin")
                 .setStyle(ButtonStyle.Success)
                 .setEmoji(settings.emojis.admin)

@@ -52,14 +52,21 @@ new Component({
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji(json);
 
+                const buttonJsonFullUsers = new ButtonBuilder()
+                    .setCustomId("export/json/full")
+                    .setLabel("Exportar Json dos usuários do AVA")
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji(json);
+
                 const buttonBack = new ButtonBuilder()
                     .setCustomId("button/back")
                     .setLabel("Voltar")
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji(settings.emojis.back);
 
-                const row = createRow(buttonJsonServer, buttonJsonUsers, buttonBack);
-                await interaction.update({ embeds: [embed], components: [row] });
+                const row = createRow(buttonJsonServer, buttonJsonUsers);
+                const row2 = createRow(buttonJsonFullUsers, buttonBack);
+                await interaction.update({ embeds: [embed], components: [row, row2] });
             } else {
                 await interaction.reply({ ephemeral, content: "Não foram encontradas informações da guilda" });
             }

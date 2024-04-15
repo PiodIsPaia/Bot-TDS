@@ -37,7 +37,7 @@ export default class StudentViewer {
                 return new EmbedBuilder()
                     .setThumbnail(avatarUrl)
                     .setTitle(`${student.fullName}`)
-                    .setDescription(`> ID: \`${student.discordUserID}\`\n> Idade: \`${student.age}\` anos\n> Polo: \`${student.polo}\``)
+                    .setDescription(`> ID: \`${student.discordUserID}\`\n> Idade: \`${student.age} anos\`\n> Polo: \`${student.polo}\``)
                     .setColor(Colors.White)
                     .setFooter(
                         { text: `Página ${students.indexOf(student) + 1} de ${students.length}` },

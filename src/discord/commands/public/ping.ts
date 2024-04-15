@@ -10,7 +10,7 @@ new Command({
 		const ping = interaction.client.ws.ping;
 		await interaction.reply({ fetchReply, ephemeral, content: "pong 🏓" }).then(async () => {
 
-			await interaction.editReply({content: `API Ping: ${ping}ms`});
+			await interaction.editReply({content: `API Ping: \`${ping}ms\``});
 		});
 	}
 });

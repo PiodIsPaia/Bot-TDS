@@ -1,4 +1,5 @@
 import { Component } from "#base";
+import { settings } from "#settings";
 import { prismaClient } from "../../../prisma/index.js";
 import { ComponentType, AttachmentBuilder } from "discord.js";
 
@@ -48,6 +49,25 @@ new Component({
         } catch (error) {
             console.error("Erro ao exportar JSON de estudantes:", error);
             await interaction.reply({ ephemeral, content: "Ocorreu um erro ao exportar JSON de estudantes" });
+        }
+    },
+});
+
+new Component({
+    customId: "export/json/full",
+    cache: "cached",
+    type: ComponentType.Button,
+    async run(interaction) {
+        try {
+            const documents = await prismaClient.document.findMany();
+            const jsonData = documents.map(doc => ({ id: doc.id, content: doc.content }));
+            const jsonString = JSON.stringify(jsonData, null, 2);
+            const attachment = new AttachmentBuilder(Buffer.from(jsonString), { name: "full.json" });
+            await interaction.reply({ ephemeral, files: [attachment] });
+        } catch (error) {
+            const erro = settings.emojis.error;
+            console.error("Erro ao exportar JSON completo:", error);
+            await interaction.reply({ ephemeral, content: erro + "Ocorreu um erro ao exportar JSON completo" });
         }
     },
 });
