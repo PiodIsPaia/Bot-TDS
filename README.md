@@ -33,5 +33,3 @@ Para iniciar o projeto, execute o seguinte comando:
 ```bash
 npm run dev
 ```
-
----
