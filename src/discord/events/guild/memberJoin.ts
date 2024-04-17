@@ -68,7 +68,6 @@ new Event({
             });
 
             const messageCollector = channel.createMessageCollector({
-                time: 160_000,
                 filter: (msg) => msg.author.id === member.user.id
             });
 
@@ -80,7 +79,6 @@ new Event({
 
                     const originalName = msg.content.trim();
                     const name = removeAccents(originalName.toLowerCase().replace(/\s/g, ""));
-                    console.log(name);
 
                     const documents = await prismaClient.document.findMany();
                     const document = documents.find(doc => doc.content.some(contentName => removeAccents(contentName.toLowerCase().replace(/\s/g, "")) === name));
@@ -89,22 +87,27 @@ new Event({
 
                         await channel.bulkDelete(100);
 
-                        const check = settings.emojis.success;
-                        const avatarUrl = member.user.avatarURL({ size: 512 });
-                        const embed = new EmbedBuilder()
-                            .setAuthor({ name: member.user.username, iconURL: avatarUrl ? avatarUrl : member.user.defaultAvatarURL })
-                            .setDescription(`Olá ${member.user.username}, bem-vindo(a) ao nosso servidor! Para nos ajudar a conhecê-lo melhor, vamos fazer algumas perguntas que serão usadas para o seu registro. Quando estiver pronto(a), clique no botão abaixo para começarmos.`)
-                            .setColor(hexToRgb(settings.colors.default));
+                        await channel.send({ content: `${settings.emojis.update} Processando...` })
+                            .then((msg) => {
+                                setTimeout(() => {
+                                    const check = settings.emojis.success;
+                                    const avatarUrl = member.user.avatarURL({ size: 512 });
+                                    const embed = new EmbedBuilder()
+                                        .setAuthor({ name: member.user.username, iconURL: avatarUrl ? avatarUrl : member.user.defaultAvatarURL })
+                                        .setDescription(`Olá ${member.user.username}, bem-vindo(a) ao nosso servidor! Para nos ajudar a conhecê-lo melhor, vamos fazer algumas perguntas que serão usadas para o seu registro. Quando estiver pronto(a), clique no botão abaixo para começarmos.`)
+                                        .setColor(hexToRgb(settings.colors.default));
 
-                        const button = new ButtonBuilder()
-                            .setCustomId("init/register")
-                            .setLabel("Iniciar")
-                            .setStyle(ButtonStyle.Secondary)
-                            .setEmoji(check);
+                                    const button = new ButtonBuilder()
+                                        .setCustomId("init/register")
+                                        .setLabel("Iniciar")
+                                        .setStyle(ButtonStyle.Secondary)
+                                        .setEmoji(check);
 
-                        const row = createRow(button);
+                                    const row = createRow(button);
 
-                        channel.send({ content: `<@${member.id}>`, embeds: [embed], components: [row] });
+                                    msg.edit({ content: `<@${member.id}>`, embeds: [embed], components: [row] });
+                                }, 3_000);
+                            }).catch((err) => console.error(err));
                     } else {
                         attempts++;
                         if (attempts >= 3) {
@@ -147,7 +150,7 @@ new Event({
 
                             messageCollector.stop();
                         } else {
-                            await channel.send({ content: `${error} Não encontrei nenhum usuário correspondente a "${originalName}"!\n💠 Por favor, digite seu nome novamente!` });
+                            await channel.send({ content: `${error} Não encontrei nenhum usuário correspondente a "${originalName}"!\n${settings.emojis.log} Por favor, digite seu nome novamente!` });
                         }
                     }
                 } catch (error) {

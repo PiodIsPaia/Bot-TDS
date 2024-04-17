@@ -54,6 +54,7 @@ new Modal({
             collector.on("collect", async i => {
                 try {
                     if (i.customId === "confirm") {
+                        interaction.channel?.bulkDelete(100);
                         try {
                             const guild = await prismaClient.guild.findUnique({
                                 where: {
@@ -128,10 +129,26 @@ new Modal({
                                 const secondName = match[2];
 
                                 await interaction.member.setNickname(`${firstName} ${secondName}`);
-                                await i.reply({ ephemeral: true, content: `${check} As informações foram salvas com sucesso!\n⏳ Deletarei este canal em 10 segundos.` });
+                                const embed = new EmbedBuilder()
+                                    .setDescription(`> ${check} As informações foram salvas com sucesso!\n> ⏳ Deletarei este canal em 10 segundos.`)
+                                    .setColor(hexToRgb(settings.colors.success));
+
+                                await interaction.editReply({ embeds: [embed], components: [] });
                             } catch (nicknameError) {
-                                await i.reply({ ephemeral: true, content: erro + "Houve um problema ao tentar definir seu nickname. Suas informações foram salvas, mas seu nickname não pôde ser alterado." });
+                                await interaction.editReply({ content: erro + "Houve um problema ao tentar definir seu nickname. Suas informações foram salvas, mas seu nickname não pôde ser alterado.", components: [], embeds: [] });
                             }
+
+                            interaction.channel?.edit({
+                                permissionOverwrites: [{
+                                    id: i.user.id,
+                                    deny: [
+                                        "ViewChannel",
+                                        "AddReactions",
+                                        "CreatePrivateThreads",
+                                        "CreatePublicThreads"
+                                    ]
+                                }],
+                            });
 
                             setTimeout(() => {
                                 i.channel?.delete();
