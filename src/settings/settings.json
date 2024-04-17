@@ -1,6 +1,6 @@
 {
   "config": {
-    "piod": "1147334381460000840",
+    "piod": "1225439518673342595",
     "andre": "446874304643334154",
     "helpChannelID": "1214361007007473705"
   },
@@ -42,12 +42,34 @@
     "ticket": "<:ticket:1229183601564713030>",
     "star": "<:star:1229184129224933446>",
     "back": "<a:back:1229200634138460331>",
-    "update": "<a:update:1229087876516675654>"
+    "update": "<a:update:1229087876516675654>",
+    "nekosrug": "<:nekocatshrug:1229593420360585289>",
+    "github": "<:github:1229842470821560340>",
+    "profile": "<:perfil:1229871658031124620>",
+    "aboutme": "<:aboutme:1229906192327901235>",
+    "dev": "<:dev:1229956598441705573>",
+    "node": "<:node:1229957329433133147>",
+    "discordjs": "<:discordjs:1229958176292601927>",
+    "network": "<:network:1229959926470676521>"
   },
 
   "images": {
     "archive": "https://i.imgur.com/CZSQ1Jn.png",
     "paimon": "https://i.imgur.com/5o3sMr3.png",
-    "badge": "https://i.imgur.com/HmCwUbl.png"
+    "badge": "https://i.imgur.com/HmCwUbl.png",
+    "cat": "https://i.imgur.com/ORiJO66.png"
+  },
+
+  "languages": {
+    "javascript": "<:javascript:1229865868125540504>",
+    "golang": "<:Golang:1229842936309612634>",
+    "java": "<:java:1229866331759841324>",
+    "typescript": "<:typescript:1229868303359414303>",
+    "php": "<:php:1229866683984904272>",
+    "csharp": "<:csharp:1229866914138951701>",
+    "python": "<:python:1229867890531106917>",
+    "rust": "<:rust:1229869246020976644>",
+    "cpp": "<:cpp:1229869650720854047>",
+    "c": "<:cc:1229870014807670794>"
   }
 }

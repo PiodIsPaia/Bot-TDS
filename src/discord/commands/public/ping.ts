@@ -1,5 +1,7 @@
 import { Command } from "#base";
-import { ApplicationCommandType } from "discord.js";
+import { settings } from "#settings";
+import { hexToRgb } from "@magicyan/discord";
+import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 new Command({
 	name: "ping",
@@ -8,9 +10,14 @@ new Command({
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction) {
 		const ping = interaction.client.ws.ping;
-		await interaction.reply({ fetchReply, ephemeral, content: "pong 🏓" }).then(async () => {
+		await interaction.reply({ ephemeral, content: "pong 🏓" }).then(async () => {
 
-			await interaction.editReply({content: `API Ping: \`${ping}ms\``});
+			const success = settings.emojis.success;
+			const embed = new EmbedBuilder()
+				.setDescription(`${success} API Ping:  \`${ping}ms\``)
+				.setColor(hexToRgb(settings.colors.success));
+
+			await interaction.editReply({ content: "", embeds: [embed] });
 		});
 	}
 });
