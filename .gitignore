@@ -21,4 +21,4 @@
 *.exe
 *.db
 *.development.json
-*.discloud.ignore
+*.discloudignore
