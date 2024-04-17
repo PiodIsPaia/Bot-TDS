@@ -4,7 +4,6 @@ import { ComponentType, EmbedBuilder, ModalBuilder, StringSelectMenuBuilder, Tex
 import { prismaClient } from "../../../prisma/index.js";
 import { settings } from "#settings";
 
-
 new Component({
     customId: "button/aboutme/:userId",
     cache: "cached",
@@ -30,6 +29,7 @@ new Component({
 
             const aboutMeValue = student ? student.aboutMe || "Amo gatinhos 🐱" : "Amo gatinhos 🐱";
             const githubValue = student ? student.github || "" : "";
+            const sinceCourseValue = student ? student.since || "23" : "23";
 
             const aboutme = new TextInputBuilder()
                 .setCustomId("textinput/aboutme")
@@ -39,6 +39,16 @@ new Component({
                 .setRequired(true)
                 .setMaxLength(100)
                 .setValue(aboutMeValue);
+
+            const since = new TextInputBuilder()
+                .setCustomId("textinput/since")
+                .setLabel("Ano que vc engressou. Exemplo: 23")
+                .setStyle(TextInputStyle.Short)
+                .setPlaceholder("Escreva apenas os dois ultimos numeros: Exemplo: 23")
+                .setRequired(true)
+                .setMaxLength(2)
+                .setMinLength(2)
+                .setValue(sinceCourseValue);
 
             const github = new TextInputBuilder()
                 .setCustomId("textinput/github")
@@ -51,11 +61,13 @@ new Component({
 
             const rowModal = createRow(aboutme);
             const rowGithub = createRow(github);
+            const rowSince = createRow(since);
 
             const modal = new ModalBuilder()
                 .setCustomId("modal/aboutme")
                 .setTitle("Descreva um pouco sobre você")
                 .addComponents(rowModal)
+                .addComponents(rowSince)
                 .addComponents(rowGithub);
 
             await interaction.showModal(modal);
@@ -71,14 +83,14 @@ new Component({
     cache: "cached",
     type: ComponentType.Button,
     async run(interaction, { userId }) {
-        
+
         if (interaction.user.id != userId) {
             const error = settings.emojis.error;
             const embed = new EmbedBuilder()
                 .setDescription(`${error} Esta interação não é á para você.`)
                 .setColor(hexToRgb(settings.colors.danger));
 
-            await interaction.reply({ephemeral, embeds: [embed]});
+            await interaction.reply({ ephemeral, embeds: [embed] });
             return;
         }
 

@@ -4,7 +4,6 @@ import { prismaClient } from "../../../prisma/index.js";
 import { brBuilder, createRow, hexToRgb } from "@magicyan/discord";
 import { settings } from "#settings";
 
-
 new Command({
     name: "perfil",
     description: "[ Utilidade ] Veja como está seu perfil",
@@ -12,9 +11,11 @@ new Command({
     dmPermission: false,
     async run(interaction) {
         const { user } = interaction;
-    
 
         const error = settings.emojis.error;
+        const archive = settings.emojis.archive;
+        const date = settings.emojis.date;
+        const aboutMeEmoji = settings.emojis.aboutme;
 
         await interaction.deferReply({ ephemeral: false });
 
@@ -25,11 +26,9 @@ new Command({
         });
 
         if (!student) {
-            const error = settings.emojis.error;
-            await interaction.editReply(`${error} Não encontrei nenhum perfil associado à sua conta do Discord`);
+            await interaction.editReply(`${error} | Não encontrei nenhum perfil associado à sua conta do Discord.\n${archive}  | Use o comando </registrar:1230178524879650848> para criar seu perfil.`);
             return;
         }
-
 
         const buttonAboutMe = new ButtonBuilder()
             .setCustomId(`button/aboutme/${user.id}`)
@@ -40,7 +39,7 @@ new Command({
         const buttonLanguages = new ButtonBuilder()
             .setCustomId(`button/languages/${user.id}`)
             .setLabel("Linguagens")
-            .setEmoji(settings.languages.golang)
+            .setEmoji(settings.emojis.gear)
             .setStyle(ButtonStyle.Secondary);
 
         const githubButton = new ButtonBuilder()
@@ -72,8 +71,7 @@ new Command({
         const name = `${firstName} ${secondName}`;
         const avatarUrl = user.avatarURL({ size: 512 }) || settings.images.cat;
 
-        const archive = settings.emojis.archive;
-        const aboutMeEmoji = settings.emojis.aboutme;
+
         const aboutMeContent = student.aboutMe ? codeBlock(`${student.aboutMe}`) : codeBlock("Amo gatinhos 🐱");
         const aboutMeSection = brBuilder(
             `### ${aboutMeEmoji} Sobre mim`,
@@ -81,6 +79,7 @@ new Command({
         );
 
         const languagesList = student.languages.length > 0 ? student.languages.map(language => `\`${language.toUpperCase()}\``).join(", ") : "`Não informado`";
+        const entryYear = student.since ? `20${student.since}` : "Não informado";
 
         const embed = new EmbedBuilder()
             .setThumbnail(avatarUrl)
@@ -89,11 +88,18 @@ new Command({
             .addFields(
                 { name: `${star} **Idade**`, value: `- \`${student.age} anos\``, inline: false },
                 { name: `${archive} **Polo**`, value: `- \`${student.polo}\``, inline: false },
-                { name: `${gear} Linguagens`, value: `- ${languagesList}`, inline: false }
+                { name: `${date} Ano que entrou`, value: `- \`${entryYear}\``, inline: true },
+                { name: `${gear} Linguagens`, value: `- ${languagesList}`, inline: true }
             )
             .setColor(hexToRgb(settings.colors.azoxo));
 
-        await interaction.editReply({ embeds: [embed], components: [row, row2] });
+        await interaction.editReply({ embeds: [embed], components: [row, row2] })
+            .then(() => {
+                setTimeout(async () => {
+                    await interaction.deleteReply();
+                }, 300_000);
+            })
+            .catch((err) => console.error(err));
 
         const collector = interaction.channel!!.createMessageComponentCollector(
             { filter: (i) => i.user.id === user.id }
@@ -108,24 +114,27 @@ new Command({
                 });
 
                 if (updatedStudent) {
+
                     let updated = false;
 
-                    if (student.aboutMe !== updatedStudent.aboutMe || student.github !== updatedStudent.github) {
-                        updated = true;
-                    }
-
-                    if (JSON.stringify(student.languages) !== JSON.stringify(updatedStudent.languages)) {
+                    if (
+                        student.aboutMe !== updatedStudent.aboutMe
+                        || student.github !== updatedStudent.github
+                        || student.since !== updatedStudent.since
+                        || JSON.stringify(student.languages) !== JSON.stringify(updatedStudent.languages)) {
                         updated = true;
                     }
 
                     if (updated) {
                         const updatedLanguagesList = updatedStudent.languages.length > 0 ? updatedStudent.languages.map(language => `\`${language.toUpperCase()}\``).join(", ") : "`Não informado`";
+                        const updateEntryYear = updatedStudent.since ? `20${updatedStudent.since}` : "Não informado";
 
-                        embed.spliceFields(0, 3);
+                        embed.spliceFields(0, 4);
                         embed.addFields(
                             { name: `${star} **Idade**`, value: `- \`${updatedStudent.age} anos\``, inline: false },
                             { name: `${archive} **Polo**`, value: `- \`${updatedStudent.polo}\``, inline: false },
-                            { name: `${gear} Linguagens`, value: `- ${updatedLanguagesList}`, inline: false }
+                            { name: `${date} **Ano que entrou**`, value: `- \`${updateEntryYear}\``, inline: true },
+                            { name: `${gear} **Linguagens**`, value: `- ${updatedLanguagesList}`, inline: true }
                         );
 
                         if (student.aboutMe !== updatedStudent.aboutMe || student.github !== updatedStudent.github) {
@@ -143,7 +152,6 @@ new Command({
 
                         await i.update({ embeds: [embed], components: [row, row2] });
                     } else {
-
                         const embedError = new EmbedBuilder()
                             .setDescription(`${error} Não houve alterações no seu perfil.`)
                             .setColor(hexToRgb(settings.colors.danger));
@@ -156,7 +164,6 @@ new Command({
                         .setColor(hexToRgb(settings.colors.danger));
 
                     await i.reply({ ephemeral, embeds: [embedError] });
-
                 }
             }
         });

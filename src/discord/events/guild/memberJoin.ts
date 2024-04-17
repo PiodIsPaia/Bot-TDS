@@ -90,6 +90,19 @@ new Event({
                         await channel.send({ content: `${settings.emojis.update} Processando...` })
                             .then((msg) => {
                                 setTimeout(() => {
+                                    msg.channel.edit({
+                                        permissionOverwrites: [{
+                                            id: member.user.id,
+                                            deny: [
+                                                "SendMessages",
+                                                "AddReactions",
+                                                "CreatePrivateThreads",
+                                                "AttachFiles",
+                                                "CreatePublicThreads",
+                                            ],
+                                        }]
+                                    });
+
                                     const check = settings.emojis.success;
                                     const avatarUrl = member.user.avatarURL({ size: 512 });
                                     const embed = new EmbedBuilder()
@@ -127,20 +140,8 @@ new Event({
                                         .setDescription(`${settings.emojis.success} Irei excluir este canal em 30 segundos.`)
                                         .setColor(hexToRgb(settings.colors.green));
 
-                                    channel.edit({
-                                        permissionOverwrites: [{
-                                            id: member.user.id,
-                                            deny: [
-                                                "SendMessages",
-                                                "AddReactions",
-                                                "CreatePrivateThreads",
-                                                "AttachFiles",
-                                                "CreatePublicThreads",
-                                            ],
-                                        }]
-                                    });
-
                                     await msg.channel.send({ embeds: [embed] });
+                                        
 
                                     setTimeout(async () => {
                                         await msg.channel.delete();

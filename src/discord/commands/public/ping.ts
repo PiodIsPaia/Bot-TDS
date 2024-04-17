@@ -10,7 +10,7 @@ new Command({
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction) {
 		const ping = interaction.client.ws.ping;
-		await interaction.reply({ ephemeral, content: "pong 🏓" }).then(async () => {
+		await interaction.reply({ ephemeral: false, content: "pong 🏓" }).then(async () => {
 
 			const success = settings.emojis.success;
 			const embed = new EmbedBuilder()

@@ -25,7 +25,7 @@ model student {
   languages       String[] @map("languages")
   createAt        DateTime @map("createAt")
   updateAt        DateTime @map("updateAt")
-  since           DateTime @map("since")
+  since           String? @map("since")
 }
 
 model guild {

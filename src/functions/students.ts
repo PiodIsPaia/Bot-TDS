@@ -12,7 +12,7 @@ interface Student {
     polo: string;
     createAt: Date;
     updateAt: Date;
-    since: Date;
+    since: string | null;
 }
 
 export default class StudentViewer {
