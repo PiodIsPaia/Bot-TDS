@@ -21,7 +21,18 @@ new Modal({
 
         try {
             const aboutMeValue = fields.getTextInputValue("textinput/aboutme");
+            const sinceCourse = fields.getTextInputValue("textinput/since");
             let githubValue = fields.getTextInputValue("textinput/github");
+
+            if (sinceCourse !== "23" && sinceCourse !== "24") {
+                const error = settings.emojis.error;
+                const embed = new EmbedBuilder()
+                    .setDescription(`${error} O valor para o ano que você engressou no curso deve ser '23' ou '24'.`)
+                    .setColor(hexToRgb(settings.colors.danger));
+            
+                await interaction.editReply({ embeds: [embed] });
+                return;
+            }
 
             if (!githubValue) {
                 githubValue = "";
@@ -66,7 +77,8 @@ new Modal({
                     },
                     data: {
                         aboutMe: aboutMeValue,
-                        github: githubValue
+                        github: githubValue,
+                        since: sinceCourse,
                     }
                 });
 

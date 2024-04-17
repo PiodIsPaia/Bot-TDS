@@ -5,7 +5,6 @@ import { prismaClient } from "../../../prisma/index.js";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder, InteractionCollector } from "discord.js";
 import WebhookLogs from "../../../functions/webhook.js";
 
-
 new Modal({
     customId: "modal/register",
     cache: "cached",
@@ -75,7 +74,7 @@ new Modal({
                                 .addFields(
                                     { name: `${people} Nome`, value: `\`${fullName}\`` },
                                     { name: `${ticket} Polo`, value: `\`${polo}\`` },
-                                    { name: `${star} Idade`, value: `\`${age}\`` }
+                                    { name: `${star} Idade`, value: `\`${age} anos\`` }
                                 );
 
                             await webhook.sendEmbed(webhookEmbed, i.client.user.avatarURL({ size: 512 })!!);
@@ -108,7 +107,6 @@ new Modal({
                                         polo: polo,
                                         createAt: new Date(),
                                         updateAt: new Date(),
-                                        since: new Date(),
                                     },
                                 });
                             }

@@ -2,7 +2,7 @@ import { Component } from "#base";
 import { settings } from "#settings";
 import { brBuilder, createRow, hexToRgb } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } from "discord.js";
-import { prismaClient } from "prisma/index.js";
+import { prismaClient } from "../../../prisma/index.js";
 
 new Component({
     customId: "menu/languages",
