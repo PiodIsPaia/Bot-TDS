@@ -62,11 +62,13 @@ new Event({
                                 const nodeEmoji = settings.emojis.node;
                                 const nodeVersion = process.version;
                                 const network = settings.emojis.network;
+                                const typescript = settings.languages.typescript;
 
                                 const apiPing = i.client.ws.ping;
 
                                 const message = brBuilder(
                                     `- ${devEmoji} Desenvolvedor: \`${piod.username}\`(\`${piod.id}\`)`,
+                                    `- ${typescript} Linguagem utilizada: \`TypeScript\``,
                                     `- ${nodeEmoji} Versão do NodeJS: \`${nodeVersion}\``,
                                     `- ${discordJSEmoji} Versão do Discord.js: \`${discordJSVersion}\``,
                                     `- ${network} API Ping: \`${apiPing}ms\``
